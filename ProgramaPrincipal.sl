@@ -26,113 +26,76 @@ inicio
 		imprimir("MENU PRINCIPAL \n")
 		imprimir("1. GENERAR BOLETO \n")
 		imprimir("2. SORTEO \n")
-		imprimir("3. NUEVA SECCION \n")
+		imprimir("3. NUEVA SESIÓN \n")
 		imprimir("4. SALIR \n")
 		imprimir("Elige una de las opciones: 1,2,3,4:")
 		leer(opcion)
 		
-		mientras (opcion > 0 and opcion < 5)
+		mientras(opcion<1 or opcion>3) //valida
 		{
-			eval			// opciones ingresadas por el usuario
-			{
-				caso (opcion == 1)
-					cls()
-					set_curpos (1,30)
-					imprimir("BINGO DIGITAL \n")
-					set_curpos (2,29)
-					imprimir("GENERAR BOLETO \n")
-					set_curpos(5,17)
-					imprimir("INGRESE CANTIDAD DE JUGADORES: ")
-					leer(cantidad_jugadores)
+			leer(opcion)
+		}
+		
+		eval			// opciones ingresadas por el usuario
+		{
+			caso (opcion == 1)
+				cls()
+				set_curpos (1,30)
+				imprimir("BINGO DIGITAL \n")
+				set_curpos (2,29)
+				imprimir("GENERAR BOLETOS \n")
+				set_curpos(5,17)
+				imprimir("INGRESE CANTIDAD DE JUGADORES: ")
+				leer(cantidad_jugadores)
+				
+				mientras (cantidad_jugadores <> 0)
+				{
+					//generaboleta(nombre_jugador)
 					
-					si (cantidad_jugadores == 0)
+					/*cls()    	
+					
+					poner dentro de generar boleta
+					
+					desde i = 1 hasta cantidad_jugadores
 					{
-						continuar = "no"
-					sino
-						cls()
-						desde i = 1 hasta cantidad_jugadores
-						{
-							set_curpos (1,30)
-							imprimir("BINGO DIGITAL \n")
-							set_curpos (2,29)
-							imprimir("GENERAR BOLETO \n")
-							
-							set_curpos (15,18)				
-							imprimir("INGRESE EL NOMBRE DEL JUGADOR: ")
-							leer(nombre_jugador)
-							
-							set_curpos (16,18)
-							imprimir("INGRESE CANTIDAD DE BOLETAS: ") 
-							leer(cantidad_boletas)
-							
-							generaboleta(nombre_jugador)
-							
-						}
-						continuar = "no"					
+						set_curpos (1,30)
+						imprimir("BINGO DIGITAL \n")
+						set_curpos (2,29)
+						imprimir("GENERAR BOLETO \n")
+						
+						set_curpos (15,18)				
+						imprimir("INGRESE EL NOMBRE DEL JUGADOR: ")
+						leer(nombre_jugador)
+						
+						set_curpos (16,18)
+						imprimir("INGRESE CANTIDAD DE BOLETAS: ") 
+						leer(cantidad_boletas)
+						
+						
 					}
-					
-				caso (opcion == 2)
-					cls()
-					set_curpos (1,30)
-					imprimir("BINGO DIGITAL \n")
-					set_curpos (2,33)
-					imprimir("SORTEO \n")
-					set_curpos (4,25)
-					imprimir("NUMERO ACTUAL:", c)
-					
-					set_curpos (6,25)
-					imprimir("NUMEROS ANTERIORES:")
-					// llamar al subprograma
-					
-					set_curpos(20,1)
-					imprimir("Escoja una de las opciones:")
-					set_curpos (21,1)
-					imprimir(" 1- Obtener el siguiente numero,")
-					set_curpos (22,1) 
-					imprimir(" 2- Varificar ganador(es),")
-					set_curpos (23,1)
-					imprimir(" 3-Fin de seccion \n")
-					leer(opcion_sorteo)
-					si (opcion_sorteo > 0 and opcion_sorteo <4)
-					{
-						eval
-						{
-							caso (opcion_sorteo == 1)
-								cls()
-								imprimir("sorteo") 
-								// subprograma generar_sorteo
-								
-							caso (opcion_sorteo == 2)
-								cls()
-								imprimir("verificar ganador") 
-								//subprograma verificar
-								
-							caso (opcion_sorteo == 3)
-								cls()
-								imprimir("fin de seccion")
-								// subprograma
-								
-						}
-					}
-					
-				caso (opcion == 3)
-					cls()
-					set_curpos (1,30)
-					imprimir("BINGO DIGITAL \n")
-					set_curpos (2,30)
-					imprimir("NUEVA SECCION \n")
-					
-					
-				caso (opcion == 4)
-					cls()
-					set_curpos(10,25)
-					imprimir("Gracias por utilizar el programa")
-					continuar = "no"
-			}
-			si (opcion <> 4)
-			{
+					*/			
+				}
+				
+			caso (opcion == 2)
+				cls()
+				set_curpos (1,30)
+				imprimir("BINGO DIGITAL \n")
+				set_curpos (2,33)
+				imprimir("SORTEO \n")
+				set_curpos (4,25)
+				
+				//SORTEO()
+				
+				
+			caso (opcion == 3) //NUEVA SESION
+				cls()
 				continuar = "si"
-			}
+				
+				
+			caso (opcion == 4)
+				cls()
+				imprimir("Gracias por jugar")
+				continuar = "no"
 		}
 	}
 fin
@@ -143,6 +106,7 @@ fin
 // Sub Programas - Funciones - Sub Rutinas
 /*---------------------------------------------------------------------*/
 
+/*
 subrutina generaboleta (nombre:cadena)
 var
 	BOLETAS: vector [*] boletas
@@ -270,4 +234,163 @@ fin
 
 //-------------------------------------------------------------------------
 
+*/
 
+/*subrutina SORTEO()
+
+var
+	num_sorteo, cont,i, j: numerico
+	SORTEO: vector[90] numerico
+inicio
+	cls()
+	
+	imprimir("NUMERO ACTUAL:", c)
+	set_curpos (6,25)
+	imprimir("NUMEROS ANTERIORES:")
+	Imprimir_Anterior()
+	
+	set_curpos(20,1)
+	imprimir("Escoja una de las opciones:")
+	set_curpos (21,1)
+	imprimir(" 1- Obtener el siguiente numero,")
+	set_curpos (22,1) 
+	imprimir(" 2- Varificar ganador(es),")
+	set_curpos (23,1)
+	imprimir(" 3-Fin de seccion \n")
+	leer(opcion_sorteo)
+	
+	mientras (opcion_sorteo > 0 and opcion_sorteo <4)
+	{
+		leer (opcion_sorteo)
+	}	
+
+	eval
+	{
+		caso (opcion_sorteo == 1)
+			cls()
+			imprimir("NUMERO SORTEADO") 
+			cont = 1
+			num_sorteo = random(89)
+				
+			desde j = 1 hasta cont
+			{
+				si(num_sorteo <> SORTEO[j])
+					{
+					SORTEO [cont] = num_sorteo
+					cont = cont + 1
+				}
+			}
+			imprimir(num_sorteo, "\n")
+			
+		caso (opcion_sorteo == 2)
+			cls()
+			imprimir("verificar ganador") 
+			// VERIFICAR (SORTEO [cont],cont)
+				var
+					CARTON: vector [10] numerico
+					SORTEO: vector [10] numerico
+					k,i,j,contador: numerico
+				inicio
+					cls()
+					SORTEO = {1,2,3,4,5,6,7,8,9,10}
+					CARTON = {1,0,0,3,0,5,0,7,8,0}
+					// imprimir ("Introduce el codigo del carton")
+					// leer(cod)
+					
+					desde k = 1 hasta 10
+					{
+						si (CARTON[i] == SORTEO[j])
+						{
+							contador = contador + 1
+							si (contador == 15)
+							{
+								imprimir("ganador")
+							}
+						}
+					}
+				fin 
+			
+		caso (opcion_sorteo == 3)
+			cls()
+			imprimir("fin de sesión")
+			// subprograma
+			
+	}
+
+
+	
+
+
+
+	Imprime_anterior(num_sorteo, SORTEO)
+
+fin
+
+
+subrutina Imprime_anterior (aux:numerico ;ref SORTEO: vector [90] numerico)
+
+var
+	k, j, i, cont: numerico
+	CARTON: matriz[9, 10]numerico
+
+inicio
+	cont, cont2, cont3, cont4, cont5, cont6, cont7, cont8, cont9 = 1
+
+	desde i=1 hasta 3
+	{
+		desde j=1 hasta 9
+		{
+			eval
+			{
+				caso(aux<=9)
+					CARTON[cont,1]=aux
+					cont = cont + 1
+					
+				caso(aux<=19)
+					CARTON[i,2]=aux
+					cont2 = cont2 + 1
+					
+				caso(aux<=29)
+					CARTON[i,3]=aux		
+					cont3 = cont3 + 1
+					
+				caso(aux<=39)
+					CARTON[i,4]=aux
+					cont4 = cont4 + 1
+					
+				caso(aux<=49)
+					CARTON[i,5]=aux
+					cont5 = cont5 + 1
+					
+				caso(aux<=59)
+					CARTON[i,6]=aux
+					cont6 = cont6 + 1
+					
+				caso(aux<=69)
+					CARTON[i,7]=aux
+					cont7 = cont7 + 1
+					
+				caso(aux<=79)
+					CARTON[i,8]=aux
+					cont8 = cont8 + 1
+					
+				caso(aux<=89)
+					CARTON[i,9]=aux
+					cont9 = cont9 + 1
+			}
+		}
+	}
+
+
+	desde i=1 hasta 3
+	{
+		desde j=1 hasta 9
+		{
+			imprimir(CARTON[i,j])
+		}
+		imprimir("\n")
+	}
+
+fin 
+
+*/
