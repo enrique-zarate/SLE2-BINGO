@@ -85,7 +85,7 @@ inicio
 						desde i = 1 hasta cantidad_boletas
 						{
 							c = c + 1
-							//generaboleta(nombre_jugador, c)
+							generaboleta(nombre_jugador)
 							readkey()
 						}
 					}
@@ -237,7 +237,9 @@ inicio
 	set_curpos(2,16)
 	imprimir("------------------------------------------------------")
 	set_curpos(3,16)
-	imprimir("             ",nombre,"\t  ",str(cod),"               ")
+	imprimir("             ",nombre,"\t  ")
+	set_curpos(3,51)
+	imprimir(str(cod),"               ")
 	set_curpos(4,16)
 	imprimir("------------------------------------------------------")
 		
