@@ -11,14 +11,16 @@ const
 	COLOR_negro:1
 
 var
-	c, opcion_sorteo, opcion,cantidad_jugadores, i, cantidad_boletas,codd: numerico 
+	c, opcion_sorteo, opcion,cantidad_jugadores, i, cantidad_boletas,codd, b, numero,band,auxjuga,colinicial: numerico 
 	nombre_jugador, continuar:cadena
+	SORTEO: vector [90] numerico
 
 inicio
 	cls()
 	set_color(COLOR_blanco,COLOR_crema)//aca para que vuelva al color fuente que estaba antes
 	continuar = "si"
-	c = 0
+	c = 1
+	auxjuga = 1
 	mientras (continuar == "si")
 	{
 		cls()
@@ -58,39 +60,34 @@ inicio
 				set_color(COLOR_blanco,COLOR_crema)// para que vuelva otra vez a salir al color normal
 				
 				
-				mientras(cantidad_jugadores <> 0)
+				mientras(auxjuga<=cantidad_jugadores)
 				{
 					cls()
-					desde i = 1 hasta cantidad_jugadores
+					set_curpos (1,30)
+					imprimir("BINGO DIGITAL \n")
+					set_curpos (2,29)
+					imprimir("GENERAR BOLETOS \n")
+					
+					set_curpos (15,18)				
+					imprimir("INGRESE EL NOMBRE DEL JUGADOR: ")
+					
+					set_color(COLOR_negro,COLOR_blanco)//aca para que la letra vuelva a salir en negro.
+					leer(nombre_jugador)
+					set_color(COLOR_blanco,COLOR_crema)// para que vuelva otra vez a salir al color normal
+					
+					set_curpos (16,18)
+					imprimir("INGRESE CANTIDAD DE BOLETAS: ") 
+					set_color(COLOR_negro,COLOR_blanco)//aca para que la letra vuelva a salir en negro.
+					leer(cantidad_boletas)
+					set_color(COLOR_blanco,COLOR_crema)// para que vuelva otra vez a salir al color normal
+					desde i = 1 hasta cantidad_boletas
 					{
-						set_curpos (1,30)
-						imprimir("BINGO DIGITAL \n")
-						set_curpos (2,29)
-						imprimir("GENERAR BOLETOS \n")
-						
-						set_curpos (15,18)				
-						imprimir("INGRESE EL NOMBRE DEL JUGADOR: ")
-						
-						set_color(COLOR_negro,COLOR_blanco)//aca para que la letra vuelva a salir en negro.
-						leer(nombre_jugador)
-						set_color(COLOR_blanco,COLOR_crema)// para que vuelva otra vez a salir al color normal
-						
-						set_curpos (16,18)
-						imprimir("INGRESE CANTIDAD DE BOLETAS: ") 
-						set_color(COLOR_negro,COLOR_blanco)//aca para que la letra vuelva a salir en negro.
-						leer(cantidad_boletas)
-						set_color(COLOR_blanco,COLOR_crema)// para que vuelva otra vez a salir al color normal
-						
-						
-						desde i = 1 hasta cantidad_boletas
-						{
-							c = c + 1
-							generaboleta(nombre_jugador)
-							readkey()
-						}
-						cls()
+						GeneraBoleta(nombre_jugador,c)
+						c = c + 1
+						readkey()
 					}
-					cantidad_jugadores = 0
+					cls()
+					auxjuga=auxjuga+1
 				}
 				
 			caso (opcion == 2)
@@ -116,40 +113,23 @@ inicio
 				imprimir(" 3-Fin de sesión \n")
 				
 				set_color(COLOR_negro,COLOR_blanco)//aca para que la letra vuelva a salir en negro.
-				leer(cantidad_jugadores)
+				leer(opcion_sorteo)
 				set_color(COLOR_blanco,COLOR_crema)// para que vuelva otra vez a salir al color normal
 				
-				
-				mientras(opcion_sorteo > 0 and opcion_sorteo <4)
+			
+				mientras (opcion_sorteo < 0 and opcion_sorteo >4)
 				{
-					set_color(COLOR_negro,COLOR_blanco)//aca para que la letra vuelva a salir en negro.
+					set_color(COLOR_negro,COLOR_blanco)//aca para que la letra vuelva a salir en negro.*/
 					leer(opcion_sorteo)
 					set_color(COLOR_blanco,COLOR_crema)// para que vuelva otra vez a salir al color normal
 				}
 				
-				eval
-				{
-					caso (opcion_sorteo == 1)
-						cls()
-						imprimir("sorteo") 
-						// subprograma generar_sorteo
-						
-					caso (opcion_sorteo == 2)
-						cls()
-						imprimir("verificar ganador") 
-						//subprograma verificar
-						
-					caso (opcion_sorteo == 3)
-						cls()
-						imprimir("fin de sesión")
-						// subprograma
-						
-				}
+				opciones (opcion_sorteo) 
+				readkey()
 				
 			caso (opcion == 3) //NUEVA SESION
 				cls()
 				continuar = "si"
-				
 				
 			caso (opcion == 4)
 				cls()
@@ -166,17 +146,15 @@ fin
 /*---------------------------------------------------------------------*/
 
 
-subrutina generaboleta (nombre:cadena) //falta la modificacion de Sebas
+subrutina GeneraBoleta (nombre:cadena;cod:numerico) //falta la modificacion de Sebas
 var
 	BOLETAS: vector [*] boletas
 	CARTON:matriz[3,9]numerico
 	aux,aux2,i,j,n,contcero,contnum,lin,esp,p:numerico
-	cod: numerico
 
 inicio
 	set_color(COLOR_negro,COLOR_negro)
 	cls()
-	cod = 1
 	n=0
 	lin=5
 	esp=16
@@ -239,9 +217,27 @@ inicio
 	set_curpos(2,16)
 	imprimir("------------------------------------------------------")
 	set_curpos(3,16)
-	imprimir("             ",nombre,"\t  ")
-	set_curpos(3,51)
-	imprimir(str(cod),"               ")
+	colinicial =(67 - strlen(nombre)) + 16
+	si(cod<10)
+	{
+		imprimir(nombre)
+		set_curpos (3,colinicial)
+		desde i=16+strlen(nombre) hasta 66
+		{
+		imprimir(" ")
+		}
+		set_curpos(3,67)
+		imprimir("00",cod)
+	sino
+		si(cod<100)
+		{
+			imprimir("             ",nombre)
+			set_curpos(3,67)
+			imprimir("0",cod)
+		sino
+					imprimir("             ",nombre,"\t  ",cod,"               ")
+		}
+	}		
 	set_curpos(4,16)
 	imprimir("------------------------------------------------------")
 		
@@ -294,6 +290,56 @@ inicio
 fin
 
 //-------------------------------------------------------------------------
+subrutina opciones (opcion:numerico)
+var
+	b, numero: numerico
+	SORTEO: vector[90] numerico
+inicio	
+	numero = 0
+		eval
+		{
+			caso (opcion == 1)
+				b = 1
+				numero = sorteo(b)
+				set_curpos (5,30)
+				imprimir("Numero actual = ",numero,"\n")
+				set_curpos (7,34)
+				
+				Imprime_anterior(numero, SORTEO)
+				
+				set_curpos(20,1)
+				imprimir("Escoja una de las opciones:")
+				set_curpos (21,1)
+				imprimir(" 1- Obtener el siguiente numero,")
+				set_curpos (22,1) 
+				imprimir(" 2- Varificar ganador(es),")
+				set_curpos (23,1)
+				imprimir(" 3-Fin de sesión \n")
+				leer(opcion)
+				
+				mientras(opcion < 0 and opcion >4)
+				{
+					set_color(COLOR_negro,COLOR_blanco)//aca para que la letra vuelva a salir en negro.
+					leer(opcion)
+					set_color(COLOR_blanco,COLOR_crema)// para que vuelva otra vez a salir al color normal
+				}
+				
+				opciones (opcion_sorteo) 
+				readkey()
+				
+			caso (opcion == 2)
+				cls()
+				imprimir("verificar ganador") 
+				//verificar (SORTEO, CARTON) 			// FALTA porque los resultados hay que guardar para enviar al subprograma
+				
+			caso (opcion == 3)
+				cls()
+				imprimir("fin de sesión")
+				band = 1	
+		}
+fin
+
+//-----------------------------------------------------------------
 
 subrutina sorteo (k:numerico)retorna numerico
 var
@@ -316,9 +362,9 @@ inicio
 		}
 	}
 
+	
 	retorna(num_sorteo)
 
-	//Imprime_anterior(num_sorteo, SORTEO)
 
 fin
 
@@ -331,7 +377,7 @@ var
 	CARTON: matriz[9, 10]numerico
 
 inicio
-	cont = 1
+	/*cont = 1
 	cont2 = 1
 	cont3 = 1
 	cont4 = 1
@@ -339,16 +385,16 @@ inicio
 	cont6 = 1 
 	cont7 = 1 
 	cont8 = 1 
-	cont9 = 1
+	cont9 = 1*/
 
-	desde i=1 hasta 3
+	desde i=1 hasta 9
 	{
 		desde j=1 hasta 9
 		{
 			eval
 			{
-				caso(aux<=9)
-					CARTON[cont,1]=aux
+				caso(aux<=9)	
+					CARTON[i,1]=aux
 					cont = cont + 1
 					
 				caso(aux<=19)
@@ -386,12 +432,14 @@ inicio
 		}
 	}
 
+	set_curpos(7,20)			// Centra solamente la primera fila
 
-	desde i=1 hasta 3
+	desde i=1 hasta 9
 	{
 		desde j=1 hasta 9
 		{
-			imprimir(CARTON[i,j])
+			imprimir(CARTON[i,j]," - ")
+			CARTON [i,j] = aux
 		}
 		imprimir("\n")
 	}
@@ -425,9 +473,13 @@ inicio
 		}
 	}
 
-	si (contador == 5)
+	si (contador == 15)
 	{
 		imprimir("ganador")
 	}
 fin 
 */
+
+//---------------------------------------------------------------------
+
+
