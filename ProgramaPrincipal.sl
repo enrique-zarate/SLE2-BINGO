@@ -38,7 +38,7 @@ inicio
 		leer(opcion)
 		set_color(COLOR_blanco,COLOR_crema)// para que vuelva otra vez a salir al color normal
 		
-		mientras(opcion<1 or opcion>3) //valida
+		mientras(opcion<1 or opcion>4) //valida
 		{
 			set_color(COLOR_negro,COLOR_blanco)//aca para que la letra vuelva a salir en negro.
 			leer(opcion)
@@ -217,7 +217,7 @@ inicio
 	set_curpos(2,16)
 	imprimir("------------------------------------------------------")
 	set_curpos(3,16)
-	colinicial =(67 - strlen(nombre)) + 16
+	colinicial =16 + strlen(nombre)
 	si(cod<10)
 	{
 		imprimir(nombre)
@@ -231,11 +231,23 @@ inicio
 	sino
 		si(cod<100)
 		{
-			imprimir("             ",nombre)
-			set_curpos(3,67)
-			imprimir("0",cod)
+			imprimir(nombre)
+			set_curpos (3,colinicial)
+				desde i=16+strlen(nombre) hasta 66
+				{
+					imprimir(" ")
+				}
+				set_curpos(3,67)
+				imprimir("0",cod)
 		sino
-					imprimir("             ",nombre,"\t  ",cod,"               ")
+			imprimir(nombre)
+			set_curpos (3,colinicial)
+				desde i=16+strlen(nombre) hasta 66
+				{
+					imprimir(" ")
+				}
+			set_curpos(3,67)
+			imprimir(cod)
 		}
 	}		
 	set_curpos(4,16)
@@ -292,20 +304,22 @@ fin
 //-------------------------------------------------------------------------
 subrutina opciones (opcion:numerico)
 var
-	b, numero: numerico
-	SORTEO: vector[90] numerico
+	b, numero, aux: numerico
+	VEC: vector[89] numerico
 inicio	
 	numero = 0
+	aux = 1
 		eval
 		{
 			caso (opcion == 1)
 				b = 1
-				numero = sorteo(b)
-				set_curpos (5,30)
+				VEC[aux] = sorteo(b)
+				aux = aux + 1
+				//set_curpos (5,30)
 				imprimir("Numero actual = ",numero,"\n")
-				set_curpos (7,34)
+				//set_curpos (7,34)
 				
-				Imprime_anterior(numero, SORTEO)
+				Imprime_anterior(VEC)
 				
 				set_curpos(20,1)
 				imprimir("Escoja una de las opciones:")
@@ -370,14 +384,14 @@ fin
 
 //-------------------------------------------------------------------------
 
-subrutina Imprime_anterior (aux:numerico ;ref SORTEO: vector [90] numerico)
+subrutina Imprime_anterior (aux:vector [89]numerico, ref ANTERIORES:matriz[9,9]numerico)
 
 var
 	k, j, i, cont,cont2, cont3, cont4, cont5, cont6, cont7, cont8, cont9: numerico
-	CARTON: matriz[9, 10]numerico
+	ANTERIORES: matriz[9, 9]numerico
 
 inicio
-	/*cont = 1
+	cont = 1
 	cont2 = 1
 	cont3 = 1
 	cont4 = 1
@@ -385,65 +399,66 @@ inicio
 	cont6 = 1 
 	cont7 = 1 
 	cont8 = 1 
-	cont9 = 1*/
+	cont9 = 1
 
 	desde i=1 hasta 9
 	{
-		desde j=1 hasta 9
-		{
+		//desde j=1 hasta 9
+		//{
 			eval
 			{
-				caso(aux<=9)	
-					CARTON[i,1]=aux
+				caso(aux[i]<=9)	
+					ANTERIORES[cont,1]= aux[i]
 					cont = cont + 1
 					
-				caso(aux<=19)
-					CARTON[i,2]=aux
+				caso(aux[i]<=19)
+					ANTERIORES[cont2,2]=aux[i]
 					cont2 = cont2 + 1
 					
-				caso(aux<=29)
-					CARTON[i,3]=aux		
+				caso(aux[i]<=29)
+					ANTERIORES[cont3,3]=aux	[i]	
 					cont3 = cont3 + 1
 					
-				caso(aux<=39)
-					CARTON[i,4]=aux
+				caso(aux[i]<=39)
+					ANTERIORES[cont4,4]=aux[i]
 					cont4 = cont4 + 1
 					
-				caso(aux<=49)
-					CARTON[i,5]=aux
+				caso(aux[i]<=49)
+					ANTERIORES[cont5,5]=aux[i]
 					cont5 = cont5 + 1
 					
-				caso(aux<=59)
-					CARTON[i,6]=aux
+				caso(aux[i]<=59)
+					ANTERIORES[cont6,6]=aux[i]
 					cont6 = cont6 + 1
 					
-				caso(aux<=69)
-					CARTON[i,7]=aux
+				caso(aux[i]<=69)
+					ANTERIORES[cont7,7]=aux[i]
 					cont7 = cont7 + 1
 					
-				caso(aux<=79)
-					CARTON[i,8]=aux
+				caso(aux[i]<=79)
+					ANTERIORES[cont8,8]=aux[i]
 					cont8 = cont8 + 1
 					
-				caso(aux<=89)
-					CARTON[i,9]=aux
+				caso(aux[i]<=89)
+					ANTERIORES[cont9,9]=aux[i]
 					cont9 = cont9 + 1
 			}
-		}
+		//}
 	}
 
-	set_curpos(7,20)			// Centra solamente la primera fila
-
+	//set_curpos(7,20)			// Centra solamente la primera fila
+/*
 	desde i=1 hasta 9
 	{
 		desde j=1 hasta 9
 		{
-			imprimir(CARTON[i,j]," - ")
-			CARTON [i,j] = aux
+			imprimir(ANTERIORES[i,j]," | ")
+			CARTON [i,j] = aux[i]
 		}
 		imprimir("\n")
 	}
-
+*/
+	imprimir(ANTERIORES)
 fin 
 
 //-------------------------------------------------------------------------
