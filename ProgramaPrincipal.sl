@@ -57,16 +57,16 @@ inicio
 				leer(cantidad_jugadores)
 				set_color(COLOR_blanco,COLOR_crema)// para que vuelva otra vez a salir al color normal
 				
+				
 				mientras(cantidad_jugadores <> 0)
 				{
-					
 					cls()
 					desde i = 1 hasta cantidad_jugadores
 					{
 						set_curpos (1,30)
 						imprimir("BINGO DIGITAL \n")
 						set_curpos (2,29)
-						imprimir("GENERAR BOLETO \n")
+						imprimir("GENERAR BOLETOS \n")
 						
 						set_curpos (15,18)				
 						imprimir("INGRESE EL NOMBRE DEL JUGADOR: ")
@@ -88,7 +88,9 @@ inicio
 							generaboleta(nombre_jugador)
 							readkey()
 						}
+						cls()
 					}
+					cantidad_jugadores = 0
 				}
 				
 			caso (opcion == 2)
@@ -292,19 +294,21 @@ inicio
 fin
 
 //-------------------------------------------------------------------------
-/*
-subrutina sorteo ()
+
+subrutina sorteo (k:numerico)retorna numerico
 var
 	num_sorteo, cont,i, j: numerico
 	SORTEO: vector[90] numerico
+	mensaje: cadena
 inicio
 	cls()
 
 	cont = 1
-	num_sorteo = random(89)
 	
+	num_sorteo = random(91) + 1
 	desde j = 1 hasta cont
-	{
+	{	
+		
 		si(num_sorteo <> SORTEO[j])
 		{
 			SORTEO [cont] = num_sorteo
@@ -312,9 +316,9 @@ inicio
 		}
 	}
 
-	imprimir("Numero actual: ", num_sorteo, "\n")
+	retorna(num_sorteo)
 
-	Imprime_anterior(num_sorteo, SORTEO)
+	//Imprime_anterior(num_sorteo, SORTEO)
 
 fin
 
@@ -323,11 +327,19 @@ fin
 subrutina Imprime_anterior (aux:numerico ;ref SORTEO: vector [90] numerico)
 
 var
-	k, j, i, cont: numerico
+	k, j, i, cont,cont2, cont3, cont4, cont5, cont6, cont7, cont8, cont9: numerico
 	CARTON: matriz[9, 10]numerico
 
 inicio
-	cont, cont2, cont3, cont4, cont5, cont6, cont7, cont8, cont9 = 1
+	cont = 1
+	cont2 = 1
+	cont3 = 1
+	cont4 = 1
+	cont5 = 1 
+	cont6 = 1 
+	cont7 = 1 
+	cont8 = 1 
+	cont9 = 1
 
 	desde i=1 hasta 3
 	{
@@ -385,6 +397,37 @@ inicio
 	}
 
 fin 
-*/
+
 //-------------------------------------------------------------------------
 
+/*
+subrutina Verificar (ref SORTEO:vector [90] numerico) //el carton)
+	
+var
+	CARTON: vector [10] numerico
+	SORTEO: vector [10] numerico
+	k,i,j,contador: numerico
+inicio
+	cls()
+	SORTEO = {1,2,3,4,5,6,7,8,9,10}
+	CARTON = {11,0,0,31,0,51,0,71,81,0}
+	// imprimir ("Introduce el codigo del carton")
+	// leer(cod)
+	
+	desde i = 1 hasta 10
+	{
+		desde j = 1 hasta 10
+		{
+			si (CARTON[i] == SORTEO[j])
+			{
+				contador = contador + 1
+			}	
+		}
+	}
+
+	si (contador == 5)
+	{
+		imprimir("ganador")
+	}
+fin 
+*/
